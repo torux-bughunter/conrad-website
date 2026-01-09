@@ -18,6 +18,16 @@ const instrumentSerif = Instrument_Serif({
 export const metadata: Metadata = {
   title: "Gelionyx - Drought-Resilience System for Agriculture",
   description: "A drought-resilience system that pairs biodegradable hydrogel made from cashew gum, chitosan, and PVA with an offline-capable AI app to help farmers grow more with less water.",
+  icons: {
+    icon: '/logo.png',
+    shortcut: '/logo.png',
+    apple: '/logo.png',
+  },
+  viewport: {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 5,
+  },
 };
 
 export default function RootLayout({

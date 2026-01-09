@@ -30,6 +30,7 @@ import AnimatedBlobBackground from "./components/AnimatedBlobBackground";
 
 export default function Home() {
   const [scrolled, setScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -39,10 +40,21 @@ export default function Home() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [mobileMenuOpen]);
+
   return (
     <div className="min-h-screen">
       {/* Navbar - Sticky & Transparent */}
-      <nav className={`fixed top-0 left-0 w-full z-50 flex items-center justify-between px-6 py-4 md:px-12 transition-all ${scrolled ? 'bg-black/80 backdrop-blur-md border-b border-white/10' : 'bg-transparent'}`}>
+      <nav className={`fixed top-0 left-0 w-full z-50 flex items-center justify-between px-4 sm:px-6 md:px-12 py-3 md:py-4 transition-all ${scrolled ? 'bg-black/80 backdrop-blur-md border-b border-white/10' : 'bg-transparent'}`}>
         <div className="flex gap-2 items-center">
           <GelionyxLogo size="sm" useImage={true} />
         </div>
@@ -52,14 +64,74 @@ export default function Home() {
           <Link href="#team" className="hover:text-[#4A90E2] transition text-sm font-semibold text-white">Team</Link>
           <Link href="#impact" className="hover:text-[#4A90E2] transition text-sm font-semibold text-white">Impact</Link>
         </div>
-        <div className="flex gap-3 items-center">
+        <div className="flex gap-2 md:gap-3 items-center">
           <Link href="#contact" className="hidden md:block text-sm font-semibold text-white hover:text-[#4A90E2] transition">Contact Us</Link>
-          <Link href="#contact" className="hover:bg-white/10 transition text-xs font-semibold text-white bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2"> Partner With Us </Link>
+          <Link href="#contact" className="hidden sm:block hover:bg-white/10 transition text-xs font-semibold text-white bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-3 md:px-4 py-2"> Partner With Us </Link>
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="md:hidden p-2 text-white hover:text-[#4A90E2] transition"
+            aria-label="Toggle menu"
+          >
+            <Menu className="w-6 h-6" />
+          </button>
         </div>
       </nav>
 
+      {/* Mobile Menu */}
+      {mobileMenuOpen && (
+        <div className="fixed inset-0 z-40 md:hidden">
+          <div className="absolute inset-0 bg-black/90 backdrop-blur-md" onClick={() => setMobileMenuOpen(false)}></div>
+          <div className="absolute top-0 right-0 h-full w-64 bg-black/95 backdrop-blur-md border-l border-white/10 p-6 overflow-y-auto">
+            <div className="flex flex-col gap-6 mt-16">
+              <Link 
+                href="#problem" 
+                className="text-white text-lg font-semibold hover:text-[#4A90E2] transition"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Problem
+              </Link>
+              <Link 
+                href="#solution" 
+                className="text-white text-lg font-semibold hover:text-[#4A90E2] transition"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Solution
+              </Link>
+              <Link 
+                href="#team" 
+                className="text-white text-lg font-semibold hover:text-[#4A90E2] transition"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Team
+              </Link>
+              <Link 
+                href="#impact" 
+                className="text-white text-lg font-semibold hover:text-[#4A90E2] transition"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Impact
+              </Link>
+              <Link 
+                href="#contact" 
+                className="text-white text-lg font-semibold hover:text-[#4A90E2] transition mt-4"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Contact Us
+              </Link>
+              <Link 
+                href="#contact" 
+                className="bg-[#4A90E2] text-white text-base font-semibold rounded-full px-6 py-3 text-center hover:bg-[#5BA0F2] transition mt-4"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Partner With Us
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Hero Section - Centered Layout */}
-      <header className="pt-20 pb-0 md:pt-24 md:pb-0 px-6 relative overflow-visible">
+      <header className="pt-16 sm:pt-20 md:pt-24 pb-0 px-4 sm:px-6 relative overflow-visible">
         {/* Animated Background - Full Coverage extending into next section */}
         <div 
           className="absolute z-0 pointer-events-none"
@@ -78,26 +150,26 @@ export default function Home() {
           {/* Top Marketing Section - Centered */}
           <div className="text-center mb-12">
             {/* Main Heading - Centered */}
-            <h1 className="text-5xl md:text-7xl font-black text-white mb-4 leading-tight" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+            <h1 className="text-4xl sm:text-5xl md:text-7xl font-black text-white mb-4 leading-tight px-2" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
               Grow more<br />
               <span className="text-[#4A90E2]">with less water.</span>
             </h1>
 
             {/* Description - Centered */}
-            <p className="text-lg md:text-xl text-white/80 mb-8 font-medium leading-relaxed max-w-2xl mx-auto">
+            <p className="text-base sm:text-lg md:text-xl text-white/80 mb-6 sm:mb-8 font-medium leading-relaxed max-w-2xl mx-auto px-2">
               A drought-resilience system that pairs biodegradable hydrogel made from cashew gum, chitosan, and PVA with an offline-capable AI app to help farmers optimize water usage and protect yields under drought pressure.
             </p>
             
             {/* CTA Buttons - Centered */}
-            <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
-              <Link href="#solution" className="bg-black text-white text-base font-semibold px-8 py-3 rounded-full hover:bg-[#333] transition inline-flex items-center justify-center gap-2 shadow-lg">
+            <div className="flex flex-col sm:flex-row gap-3 justify-center items-center px-2">
+              <Link href="#solution" className="w-full sm:w-auto bg-black text-white text-base font-semibold px-6 sm:px-8 py-3 rounded-full hover:bg-[#333] transition inline-flex items-center justify-center gap-2 shadow-lg">
                 Explore the System
                 <ArrowRight className="w-4 h-4" />
               </Link>
-              <Link href="#solution" className="text-white text-base font-semibold hover:text-[#4A90E2] transition inline-flex items-center justify-center gap-2">
+              <a href="https://youtu.be/iojsEagi29w" target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto text-white text-base font-semibold hover:text-[#4A90E2] transition inline-flex items-center justify-center gap-2">
                 <PlayCircle className="w-5 h-5" />
                 See how it works
-              </Link>
+              </a>
             </div>
           </div>
 
@@ -111,25 +183,25 @@ export default function Home() {
       </header>
 
       {/* Problem Section */}
-      <section id="problem" className="bg-white py-24 px-6 border-t-2 border-black relative -mt-64 md:-mt-96 z-10">
+      <section id="problem" className="bg-white py-12 sm:py-16 md:py-24 px-4 sm:px-6 border-t-2 border-black relative -mt-32 sm:-mt-48 md:-mt-64 lg:-mt-96 z-10">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <span className="bg-[#4A90E2] text-white px-4 py-1.5 rounded-full text-sm font-semibold uppercase tracking-wider border border-[#4A90E2] shadow-md">The Challenge</span>
-            <h2 className="text-5xl md:text-7xl font-black tracking-tight text-black mt-4 mb-8 leading-none" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+          <div className="text-center mb-8 sm:mb-12 md:mb-16">
+            <span className="bg-[#4A90E2] text-white px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold uppercase tracking-wider border border-[#4A90E2] shadow-md">The Challenge</span>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-black tracking-tight text-black mt-4 mb-6 sm:mb-8 leading-none px-2" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
               Water scarcity is<br />squeezing farmers.
             </h2>
           </div>
           
-          <div className="grid md:grid-cols-2 gap-12 items-center mb-16">
+          <div className="grid md:grid-cols-2 gap-6 sm:gap-8 md:gap-12 items-center mb-8 sm:mb-12 md:mb-16">
             <div>
-              <p className="text-xl text-black/80 font-medium leading-relaxed mb-6">
+              <p className="text-base sm:text-lg md:text-xl text-black/80 font-medium leading-relaxed mb-4 sm:mb-6">
                 Across the globe, farming communities are being squeezed by water scarcity and more frequent extreme weather. The World Health Organization reports that water scarcity affects about 40 percent of the world's population and that roughly 55 million people live in drought-impacted areas each year.
               </p>
-              <p className="text-xl text-black/80 font-medium leading-relaxed mb-6">
+              <p className="text-base sm:text-lg md:text-xl text-black/80 font-medium leading-relaxed mb-4 sm:mb-6">
                 Recent analyses show dry rainfall shocks have increased by about 233 percent in recent years, and more than 85 percent of droughts strike low to middle-income countries, where a single failed season can spiral into debt, migration, and hunger.
               </p>
             </div>
-            <div className="bg-[#0F4C75] rounded-2xl p-8 text-white">
+            <div className="bg-[#0F4C75] rounded-2xl p-6 sm:p-8 text-white">
               <h3 className="text-2xl font-black mb-4" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>The Pain Points</h3>
               <ul className="space-y-4">
                 <li className="flex items-start gap-3">
@@ -155,13 +227,13 @@ export default function Home() {
       </section>
 
       {/* Value Prop / How it works */}
-      <section id="solution" className="overflow-hidden bg-[#0F4C75] border-black border-t-2 pt-16 md:pt-20 pr-6 pb-24 pl-6 relative z-20">
-        <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+      <section id="solution" className="overflow-hidden bg-[#0F4C75] border-black border-t-2 pt-12 sm:pt-16 md:pt-20 px-4 sm:px-6 pb-12 sm:pb-16 md:pb-24 relative z-20">
+        <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-8 sm:gap-10 md:gap-12 items-center">
           <div className="order-2 md:order-1 relative">
-            <h2 className="text-5xl md:text-7xl font-black tracking-tight text-white mb-8 leading-none" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-black tracking-tight text-white mb-6 sm:mb-8 leading-none" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
               Nature meets<br />neural networks.
             </h2>
-            <div className="space-y-8">
+            <div className="space-y-6 sm:space-y-8">
               <div className="group">
                 <div className="flex items-start gap-4">
                   <div className="w-12 h-12 rounded-full bg-[#4A90E2] text-white flex items-center justify-center flex-shrink-0 mt-1">
@@ -222,19 +294,19 @@ export default function Home() {
         <svg className="absolute top-0 w-full h-16 md:h-32 -mt-1 transform rotate-180" viewBox="0 0 1440 320" preserveAspectRatio="none">
           <path fill="#4A90E2" fillOpacity="1" d="M0,96L80,112C160,128,320,160,480,160C640,160,800,128,960,112C1120,96,1280,96,1360,96L1440,96L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"></path>
         </svg>
-        <div className="pt-32 pb-24 px-6 max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-12 gap-12">
+        <div className="pt-16 sm:pt-24 md:pt-32 pb-12 sm:pb-16 md:pb-24 px-4 sm:px-6 max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-12 gap-6 sm:gap-8 md:gap-12">
             <div className="md:col-span-5">
-              <h2 className="text-5xl md:text-7xl font-black tracking-tight text-[#4A90E2] leading-none mb-6" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-black tracking-tight text-[#4A90E2] leading-none mb-4 sm:mb-6" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
                 Stop guessing. <br />Start growing.
               </h2>
-              <Link href="#impact" className="inline-flex items-center gap-2 px-8 py-3.5 bg-[#4A90E2] text-white rounded-full font-semibold hover:bg-[#5BA0F2] transition shadow-lg">
+              <Link href="#impact" className="inline-flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-3.5 bg-[#4A90E2] text-white rounded-full text-sm sm:text-base font-semibold hover:bg-[#5BA0F2] transition shadow-lg">
                 View Impact Data
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
             <div className="md:col-span-7 flex flex-col justify-center">
-              <p className="text-xl md:text-2xl text-white font-medium leading-relaxed font-manrope">
+              <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white font-medium leading-relaxed font-manrope">
                 Traditional irrigation wastes water and ignores shifting climate patterns. Gelionyx addresses the gap by improving root-zone water retention and pairing it with clear, localized recommendations, so farmers can conserve water while protecting yields under drought pressure.
               </p>
             </div>
@@ -242,16 +314,16 @@ export default function Home() {
         </div>
 
         {/* Feature Grid */}
-        <div className="pb-32 px-6">
+        <div className="pb-12 sm:pb-16 md:pb-32 px-4 sm:px-6">
           <div className="max-w-6xl mr-auto ml-auto">
-            <div className="text-center mb-16">
-              <span className="bg-[#4A90E2] text-white px-4 py-1.5 rounded-full text-sm font-semibold uppercase tracking-wider border border-[#4A90E2] shadow-md">Core Technology</span>
-              <h3 className="text-4xl md:text-5xl font-black text-white mt-4" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>The Gelionyx Ecosystem</h3>
+            <div className="text-center mb-8 sm:mb-12 md:mb-16">
+              <span className="bg-[#4A90E2] text-white px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold uppercase tracking-wider border border-[#4A90E2] shadow-md">Core Technology</span>
+              <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-white mt-4 px-2" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>The Gelionyx Ecosystem</h3>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 gap-x-6 gap-y-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
 
               {/* Card 1 */}
-              <div className="group hover:bg-white/5 transition duration-300 overflow-hidden cursor-pointer hover:border-[#4A90E2]/50 bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl pt-8 pr-8 pb-8 pl-8 relative">
+              <div className="group hover:bg-white/5 transition duration-300 overflow-hidden cursor-pointer hover:border-[#4A90E2]/50 bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 sm:p-8 relative">
                 <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition">
                   <Sprout className="w-24 h-24 text-[#4A90E2]" />
                 </div>
@@ -291,29 +363,29 @@ export default function Home() {
       </div>
 
       {/* Social Proof / Blog Section (White) */}
-      <section id="impact" className="bg-white py-24 px-6 border-t-2 border-black">
+      <section id="impact" className="bg-white py-12 sm:py-16 md:py-24 px-4 sm:px-6 border-t-2 border-black">
         <div className="max-w-6xl mx-auto">
-          <div className="flex flex-col md:flex-row justify-between items-end mb-12">
-            <h2 className="text-5xl md:text-6xl font-black tracking-tight text-black leading-none mb-6 md:mb-0" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+          <div className="flex flex-col md:flex-row justify-between items-end mb-8 sm:mb-12">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-black leading-none mb-6 md:mb-0" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
               Global Impact.
             </h2>
           </div>
 
           {/* Bento Grid Layout */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
 
             {/* Large Card */}
-            <div className="md:col-span-2 bg-[#0F4C75] rounded-2xl p-8 md:p-12 relative overflow-hidden min-h-[400px] flex flex-col justify-end border border-white/20 shadow-xl group">
+            <div className="md:col-span-2 bg-[#0F4C75] rounded-2xl p-6 sm:p-8 md:p-12 relative overflow-hidden min-h-[300px] sm:min-h-[400px] flex flex-col justify-end border border-white/20 shadow-xl group">
               <img src="https://images.unsplash.com/photo-1605000797499-95a51c5269ae?auto=format&fit=crop&q=80&w=800" className="absolute inset-0 w-full h-full object-cover opacity-60 mix-blend-multiply transition-transform duration-700 group-hover:scale-110" alt="Farming" />
               <div className="relative z-10">
                 <span className="bg-[#4A90E2] text-white text-xs font-semibold px-4 py-1.5 rounded-full uppercase mb-4 inline-block border border-[#4A90E2] shadow-md">Pilot Program</span>
-                <h3 className="text-3xl md:text-5xl font-black text-white leading-tight mb-4" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>Field Validation Coming Q4 2026</h3>
-                <p className="text-white font-medium text-lg font-manrope">Six pilot farms across Ethiopia, Kenya, and Somalia in partnership with agricultural agencies</p>
+                <h3 className="text-2xl sm:text-3xl md:text-5xl font-black text-white leading-tight mb-3 sm:mb-4" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>Field Validation Coming Q4 2026</h3>
+                <p className="text-white font-medium text-base sm:text-lg font-manrope">Six pilot farms across Ethiopia, Kenya, and Somalia in partnership with agricultural agencies</p>
               </div>
             </div>
 
             {/* Small Card 1 */}
-            <div className="bg-black rounded-2xl p-8 flex flex-col justify-between relative overflow-hidden border border-white/10 shadow-xl">
+            <div className="bg-black rounded-2xl p-6 sm:p-8 flex flex-col justify-between relative overflow-hidden border border-white/10 shadow-xl">
               <div className="absolute -right-10 -top-10 w-40 h-40 bg-white/10 rounded-full blur-3xl"></div>
               <div>
                 <span className="bg-[#4A90E2] text-white text-xs font-semibold px-4 py-1.5 rounded-full uppercase mb-4 inline-block border border-[#4A90E2] shadow-md">Target Cost</span>
@@ -326,7 +398,7 @@ export default function Home() {
             </div>
 
             {/* Small Card 2 */}
-            <div className="bg-[#4A90E2] rounded-2xl p-8 text-white flex flex-col justify-between border border-white/20 shadow-xl">
+            <div className="bg-[#4A90E2] rounded-2xl p-6 sm:p-8 text-white flex flex-col justify-between border border-white/20 shadow-xl">
               <div className="">
                 <span className="bg-white/30 backdrop-blur-sm text-white text-xs font-semibold px-4 py-1.5 rounded-full uppercase mb-4 inline-block border border-white/40 shadow-md">Statistics</span>
                 <h3 className="text-2xl font-black text-white mb-2" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>Water Conservation</h3>
@@ -338,7 +410,7 @@ export default function Home() {
             </div>
 
             {/* Medium Card */}
-            <div className="md:col-span-2 bg-[#0F4C75] rounded-2xl p-8 md:p-12 flex flex-col md:flex-row items-center gap-8 border border-black/10 shadow-xl">
+            <div className="md:col-span-2 bg-[#0F4C75] rounded-2xl p-6 sm:p-8 md:p-12 flex flex-col md:flex-row items-center gap-6 sm:gap-8 border border-black/10 shadow-xl">
               <div className="flex-1">
                 <h3 className="text-3xl font-black text-white mb-4" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>Market Opportunity</h3>
                 <p className="text-white/80 text-lg mb-6">Serving small to mid-sized farmers in drought-prone regions and the institutions that fund drought programs. With 350 million farmers in Sub-Saharan Africa and South Asia, and over 1.2 million agricultural cooperatives worldwide, the opportunity is vast.</p>
@@ -366,21 +438,21 @@ export default function Home() {
       </section>
 
       {/* Team Section */}
-      <section id="team" className="bg-white py-24 px-6 border-t-2 border-black">
+      <section id="team" className="bg-white py-12 sm:py-16 md:py-24 px-4 sm:px-6 border-t-2 border-black">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <span className="bg-[#4A90E2] text-white px-4 py-1.5 rounded-full text-sm font-semibold uppercase tracking-wider border border-[#4A90E2] shadow-md">Our Team</span>
-            <h2 className="text-5xl md:text-7xl font-black tracking-tight text-black mt-4 mb-6 leading-none" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+          <div className="text-center mb-8 sm:mb-12 md:mb-16">
+            <span className="bg-[#4A90E2] text-white px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold uppercase tracking-wider border border-[#4A90E2] shadow-md">Our Team</span>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-black tracking-tight text-black mt-4 mb-4 sm:mb-6 leading-none px-2" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
               Three friends.<br />One mission.
             </h2>
-            <p className="text-xl text-black/80 font-medium leading-relaxed max-w-3xl mx-auto">
+            <p className="text-base sm:text-lg md:text-xl text-black/80 font-medium leading-relaxed max-w-3xl mx-auto px-2">
               Gelionyx formed when three friends from Illinois and Texas combined their interest in chemistry and computer science to address an important issue in agriculture.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
             {/* Team Member 1 - Leroy */}
-            <div className="bg-[#0F4C75] rounded-2xl p-8 text-white border border-white/10 shadow-xl">
+            <div className="bg-[#0F4C75] rounded-2xl p-6 sm:p-8 text-white border border-white/10 shadow-xl">
               <div className="w-20 h-20 rounded-full bg-[#4A90E2] flex items-center justify-center mb-6 text-3xl font-black">
                 L
               </div>
@@ -416,8 +488,8 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="mt-16 text-center">
-            <p className="text-xl text-black/80 font-medium leading-relaxed max-w-3xl mx-auto">
+          <div className="mt-8 sm:mt-12 md:mt-16 text-center">
+            <p className="text-base sm:text-lg md:text-xl text-black/80 font-medium leading-relaxed max-w-3xl mx-auto px-2">
               As a team, we combine hands-on prototyping, practical software design, and program-style thinking about training, delivery, and impact measurement. We are motivated by the farmers who bear climate risk first, and by the belief that saving water should not come at the environment's expense.
             </p>
           </div>
@@ -432,17 +504,17 @@ export default function Home() {
       </div>
 
       {/* Footer / Contact */}
-      <footer id="contact" className="bg-black pt-12 pb-12 px-6">
+      <footer id="contact" className="bg-black pt-12 sm:pt-16 md:pt-12 pb-12 px-4 sm:px-6">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-6xl md:text-8xl font-black tracking-tighter text-white mb-8 leading-[0.85]" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+          <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-black tracking-tighter text-white mb-6 sm:mb-8 leading-[0.85] px-2" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
             Ready to <br />scale?
           </h2>
-          <p className="text-xl font-medium text-white/90 mb-10 max-w-xl mx-auto font-manrope">
+          <p className="text-base sm:text-lg md:text-xl font-medium text-white/90 mb-8 sm:mb-10 max-w-xl mx-auto font-manrope px-2">
             Whether you represent a government, NGO, or commercial farm, let&apos;s discuss how Gelionyx can secure your future.
           </p>
 
           {/* Registration Form */}
-          <div className="bg-white/10 backdrop-blur-md rounded-2xl p-8 border border-white/20 max-w-lg mx-auto shadow-xl">
+          <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 sm:p-8 border border-white/20 max-w-lg mx-auto shadow-xl">
             <form className="space-y-4 text-left">
               <div className="">
                 <label className="block text-sm font-semibold text-white mb-1">Email Address</label>
