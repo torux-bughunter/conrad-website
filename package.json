@@ -9,7 +9,10 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@tsparticles/react": "^3.0.0",
+    "@tsparticles/slim": "^3.9.1",
     "groq-sdk": "^0.37.0",
+    "lottie-react": "^2.4.1",
     "lucide-react": "^0.556.0",
     "next": "16.0.8",
     "react": "19.2.1",

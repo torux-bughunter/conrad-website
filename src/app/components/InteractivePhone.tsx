@@ -2,11 +2,12 @@
 
 import { useState } from "react";
 import { Menu, User, AlertCircle, X, Droplets, BarChart3, Map } from "lucide-react";
+import GelionyxLogo from "./GelionyxLogo";
 
 export default function InteractivePhone() {
   const [selectedView, setSelectedView] = useState<string | null>(null);
   const [selectedBar, setSelectedBar] = useState<number | null>(null);
-  const [phoneScreen, setPhoneScreen] = useState<"main" | "deploy" | "details" | "menu">("main");
+  const [phoneScreen, setPhoneScreen] = useState<"main" | "details" | "menu">("main");
 
   const closeView = () => {
     setSelectedView(null);
@@ -30,7 +31,9 @@ export default function InteractivePhone() {
               >
                 <Menu className="w-6 h-6 cursor-pointer" />
               </button>
-              <span className="text-xs font-bold tracking-widest uppercase text-[#00A651]">Gelionyx OS</span>
+              <div className="scale-75 origin-center">
+                <GelionyxLogo size="sm" />
+              </div>
               <button 
                 onClick={() => setSelectedView("profile")}
                 className="hover:opacity-70 transition-opacity"
@@ -53,7 +56,7 @@ export default function InteractivePhone() {
 
             {/* Graph UI */}
             <div 
-              className="bg-neutral-800 rounded-xl p-4 mb-4 border border-neutral-700 cursor-pointer hover:border-[#00A651] transition-colors"
+              className="bg-neutral-800 rounded-xl p-4 mb-4 border border-neutral-700 cursor-pointer hover:border-[#0F4C75] transition-colors"
               onClick={() => setSelectedView("chart-details")}
             >
               <div className="flex justify-between items-end mb-2 h-24 gap-1">
@@ -61,9 +64,9 @@ export default function InteractivePhone() {
                   <div
                     key={index}
                     className={`w-full rounded-t transition-all cursor-pointer group relative ${
-                      index === 3 ? "bg-[#00A651]" : "bg-[#00A651]/50"
+                      index === 3 ? "bg-[#0F4C75]" : "bg-[#0F4C75]/50"
                     } ${
-                      selectedBar === index ? "h-[90%] bg-[#40E0D0] scale-105" : `h-[${height}%]`
+                      selectedBar === index ? "h-[90%] bg-[#4A90E2] scale-105" : `h-[${height}%]`
                     }`}
                     onClick={(e) => {
                       e.stopPropagation();
@@ -82,64 +85,13 @@ export default function InteractivePhone() {
               <p className="text-xs text-center text-neutral-400">Soil Moisture Projection</p>
             </div>
 
-            {/* Alert Box */}
-            <div 
-              className="bg-[#40E0D0] rounded-xl p-4 mb-4 text-black cursor-pointer hover:bg-[#00A651] hover:text-white transition-all"
-              onClick={() => setPhoneScreen("deploy")}
-            >
-              <div className="flex items-center gap-3 mb-2">
-                <AlertCircle className="w-4 h-4" />
-                <span className="font-bold text-sm">Action Required</span>
-              </div>
-              <p className="text-xs font-medium leading-tight">Deploy Hydrogel batch B-04 within 48 hours to prevent root stress.</p>
-            </div>
-
             {/* Action Buttons */}
-            <div className="mt-auto flex justify-between gap-4">
-              <button 
-                onClick={() => setPhoneScreen("deploy")}
-                className="w-full bg-[#00A651] text-white py-3 rounded-lg font-bold text-sm hover:bg-[#40E0D0] hover:text-black transition-all active:scale-95"
-              >
-                Deploy
-              </button>
+            <div className="mt-auto flex justify-center gap-4">
               <button 
                 onClick={() => setPhoneScreen("details")}
-                className="w-full bg-neutral-700 text-white py-3 rounded-lg font-bold text-sm hover:bg-neutral-600 transition-all active:scale-95"
+                className="w-full bg-[#0F4C75] text-white py-3 rounded-lg font-bold text-sm hover:bg-[#4A90E2] transition-all active:scale-95"
               >
-                Details
-              </button>
-            </div>
-          </div>
-        )}
-
-        {/* Deploy Screen */}
-        {phoneScreen === "deploy" && (
-          <div className="p-6 flex flex-col h-full text-white">
-            <button 
-              onClick={() => setPhoneScreen("main")}
-              className="text-white/70 hover:text-white mb-4 text-sm font-bold"
-            >
-              ← Back
-            </button>
-            <div className="flex-1 flex flex-col justify-center">
-              <div className="bg-[#00A651] rounded-xl p-4 mb-4 border-2 border-white/20">
-                <div className="text-xs font-bold mb-2 uppercase">Batch Selected</div>
-                <div className="text-lg font-bold">B-04</div>
-                <div className="text-xs mt-1">Cashew Gum Hydrogel</div>
-              </div>
-              <div className="bg-neutral-800 rounded-xl p-4 mb-4 border border-neutral-700">
-                <div className="text-xs font-bold mb-2 uppercase">Quantity</div>
-                <div className="text-sm font-bold">50kg per hectare</div>
-                <div className="text-xs text-neutral-400 mt-1">Total: 125kg for 2.5 hectares</div>
-              </div>
-              <button 
-                onClick={() => {
-                  setSelectedView("deploy-confirmed");
-                  setTimeout(() => setPhoneScreen("main"), 2000);
-                }}
-                className="w-full bg-[#40E0D0] text-black py-3 rounded-lg font-bold text-sm hover:bg-white transition-all active:scale-95"
-              >
-                Confirm Deployment
+                View Details
               </button>
             </div>
           </div>
@@ -162,7 +114,7 @@ export default function InteractivePhone() {
               </div>
               <div className="bg-neutral-800 rounded-xl p-4 border border-neutral-700">
                 <div className="flex items-center gap-2 mb-2">
-                  <Droplets className="w-4 h-4 text-[#40E0D0]" />
+                  <Droplets className="w-4 h-4 text-[#4A90E2]" />
                   <div className="text-xs font-bold uppercase">Current Metrics</div>
                 </div>
                 <div className="grid grid-cols-2 gap-2 text-xs">
@@ -176,9 +128,9 @@ export default function InteractivePhone() {
                   </div>
                 </div>
               </div>
-              <div className="bg-[#00A651] rounded-xl p-4 border-2 border-white/20">
+              <div className="bg-[#0F4C75] rounded-xl p-4 border border-white/20">
                 <div className="text-xs font-bold mb-2 uppercase">AI Prediction</div>
-                <div className="text-sm">Optimal deployment window: Next 24-48 hours</div>
+                <div className="text-sm">Optimal monitoring window: Next 24-48 hours</div>
               </div>
             </div>
           </div>
@@ -202,7 +154,7 @@ export default function InteractivePhone() {
                 className="w-full bg-neutral-800 rounded-xl p-4 border border-neutral-700 hover:bg-neutral-700 transition-all text-left"
               >
                 <div className="flex items-center gap-3">
-                  <BarChart3 className="w-5 h-5 text-[#40E0D0]" />
+                  <BarChart3 className="w-5 h-5 text-[#4A90E2]" />
                   <div>
                     <div className="font-bold text-sm">Overview</div>
                     <div className="text-xs text-neutral-400">Field monitoring</div>
@@ -217,7 +169,7 @@ export default function InteractivePhone() {
                 className="w-full bg-neutral-800 rounded-xl p-4 border border-neutral-700 hover:bg-neutral-700 transition-all text-left"
               >
                 <div className="flex items-center gap-3">
-                  <BarChart3 className="w-5 h-5 text-[#00A651]" />
+                  <BarChart3 className="w-5 h-5 text-[#0F4C75]" />
                   <div>
                     <div className="font-bold text-sm">Analytics</div>
                     <div className="text-xs text-neutral-400">Performance metrics</div>
@@ -232,7 +184,7 @@ export default function InteractivePhone() {
                 className="w-full bg-neutral-800 rounded-xl p-4 border border-neutral-700 hover:bg-neutral-700 transition-all text-left"
               >
                 <div className="flex items-center gap-3">
-                  <Map className="w-5 h-5 text-[#40E0D0]" />
+                  <Map className="w-5 h-5 text-[#4A90E2]" />
                   <div>
                     <div className="font-bold text-sm">Fields</div>
                     <div className="text-xs text-neutral-400">Field management</div>
@@ -252,7 +204,7 @@ export default function InteractivePhone() {
           onClick={closeView}
         >
           <div 
-            className="bg-white rounded-3xl border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] p-6 max-w-sm w-full relative"
+            className="bg-white rounded-2xl border border-black/20 shadow-2xl p-6 max-w-sm w-full relative"
             onClick={(e) => e.stopPropagation()}
           >
             <button
@@ -266,11 +218,11 @@ export default function InteractivePhone() {
               <div>
                 <h3 className="text-xl font-black text-black mb-4 uppercase">Field Zone A</h3>
                 <div className="space-y-3">
-                  <div className="bg-[#00A651] text-white rounded-2xl p-4 border-2 border-black">
+                  <div className="bg-[#0F4C75] text-white rounded-2xl p-4 border border-black/20">
                     <div className="text-xs font-bold mb-2 uppercase">Status</div>
                     <div className="text-sm font-bold">Critical Drought Risk</div>
                   </div>
-                  <div className="bg-[#40E0D0] rounded-2xl p-4 border-2 border-black">
+                  <div className="bg-[#4A90E2] rounded-2xl p-4 border border-black/20 text-white">
                     <div className="text-xs font-bold text-black mb-2 uppercase">Area</div>
                     <div className="text-sm font-bold text-black">2.5 hectares</div>
                   </div>
@@ -282,11 +234,11 @@ export default function InteractivePhone() {
               <div>
                 <h3 className="text-xl font-black text-black mb-4 uppercase">Soil Moisture Chart</h3>
                 <div className="space-y-3">
-                  <div className="bg-black text-white rounded-2xl p-4 border-2 border-black">
+                  <div className="bg-black text-white rounded-2xl p-4 border border-black/20">
                     <div className="text-xs font-bold mb-2 uppercase">Current Reading</div>
                     <div className="text-lg font-bold">12%</div>
                   </div>
-                  <div className="bg-[#40E0D0] rounded-2xl p-4 border-2 border-black">
+                  <div className="bg-[#4A90E2] rounded-2xl p-4 border border-black/20 text-white">
                     <div className="text-xs font-bold text-black mb-2 uppercase">Trend</div>
                     <div className="text-sm font-bold text-black">Decreasing - Action required</div>
                   </div>
@@ -298,11 +250,11 @@ export default function InteractivePhone() {
               <div>
                 <h3 className="text-xl font-black text-black mb-4 uppercase">User Profile</h3>
                 <div className="space-y-3">
-                  <div className="bg-[#40E0D0] rounded-2xl p-4 border-2 border-black">
+                  <div className="bg-[#4A90E2] rounded-2xl p-4 border border-black/20 text-white">
                     <div className="text-xs font-bold text-black mb-2 uppercase">Account</div>
                     <div className="text-sm font-bold text-black">Farmer Account</div>
                   </div>
-                  <div className="bg-white rounded-2xl p-4 border-2 border-black">
+                  <div className="bg-white rounded-2xl p-4 border border-black/20">
                     <div className="text-xs font-bold text-black mb-2 uppercase">Active Fields</div>
                     <div className="text-sm font-bold text-black">2 fields monitored</div>
                   </div>
@@ -310,15 +262,6 @@ export default function InteractivePhone() {
               </div>
             )}
 
-            {selectedView === "deploy-confirmed" && (
-              <div className="text-center">
-                <div className="w-16 h-16 bg-[#00A651] rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl">✓</span>
-                </div>
-                <h3 className="text-xl font-black text-black mb-2 uppercase">Deployment Scheduled!</h3>
-                <p className="text-sm text-black">Batch B-04 will be deployed within 2 hours</p>
-              </div>
-            )}
 
             {selectedView === "menu-overview" && (
               <div>

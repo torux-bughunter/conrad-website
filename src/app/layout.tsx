@@ -16,8 +16,8 @@ const instrumentSerif = Instrument_Serif({
 });
 
 export const metadata: Metadata = {
-  title: "Gelionyx - Intelligent Hydrogels for Drought Resilience",
-  description: "Biodegradable probiotic hydrogels combined with predictive AI to restore soil health and optimize water usage in arid regions.",
+  title: "Gelionyx - Drought-Resilience System for Agriculture",
+  description: "A drought-resilience system that pairs biodegradable hydrogel made from cashew gum, chitosan, and PVA with an offline-capable AI app to help farmers grow more with less water.",
 };
 
 export default function RootLayout({
@@ -28,7 +28,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${manrope.variable} ${instrumentSerif.variable} antialiased font-manrope border-t-[12px] border-[#00A651] bg-white text-black overflow-x-hidden`}
+        className={`${manrope.variable} ${instrumentSerif.variable} antialiased font-manrope border-t-[12px] border-[#0F4C75] bg-white text-black overflow-x-hidden`}
       >
         {children}
       </body>
